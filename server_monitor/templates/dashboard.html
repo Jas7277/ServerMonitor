@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Monitoring Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
+</head>
+<body>
+    <header>
+        <h1>Server Monitor</h1>
+        <nav>
+            <button id="refresh">Refresh</button>
+            <button id="add-server-btn">+ Add Server</button>
+        </nav>
+    </header>
+
+    <main>
+        <section id="server-list">
+            <!-- Dynamically generated cards -->
+            {% for server in servers %}
+            <div class="server-card" data-server="{{ server.name }}">
+                <h2>{{ server.name }}</h2>
+                <p><strong>IP:</strong>{{ server.ip }}</p>
+                <div class="stats">
+                    <div class="stat">
+                        <label>CPU</label>
+                        <div class="bar">
+                            <div class="fill" style="width: {{ server.cpu }}%"></div>
+                        </div>
+                        <span>{{ server.cpu }}%</span>
+                    </div>
+                    <div class="stat">
+                        <label>Memory</label>
+                        <div class="bar">
+                            <div class="fill" style="width: {{ server.memory }}%"></div>
+                        </div>
+                        <span>{{ server.memory }}%</span>
+                    </div>
+                    <div class="stat">
+                        <label>Disk</label>
+                        <div class="bar">
+                            <div class="fill" style="width: {{ server.disk }}%"></div>
+                        </div>
+                        <span>{{ server.disk }}%</span>
+                    </div>
+                </div>
+                <p class="uptime">Uptime: {{ server.uptime }}</p>
+                <p class="status {{ 'online' if server.online else 'offline' }}">{{ 'Online' if server.online else 'Offline' }}</p>
+            </div>
+            {% endfor %}
+        </section>
+    </main>
+
+    <footer>2025 Server Monitor</footer>
+
+    <!-- Add Server Modal -->
+    <div id="modal-overlay" class="hidden"></div>
+    <div id="add-server-modal" class="hidden">
+        <h2>Add New Server</h2>
+        <form id="add-server-form">
+            <label>Server Name <input type="text" name="name" required></label>
+            <label>IP or Hostname <input type="text" name="ip" required></label>
+            <label>Notes (optional) <textarea name="notes" rows="3"></textarea></label>
+
+            <div class="actions">
+                <button type="button" id="cancel-add">Cancel</button>
+                <button type="submit">Add Server</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>

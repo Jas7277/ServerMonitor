@@ -1,0 +1,3 @@
+requests
+Flask>=3.0,<4.0
+psutil>=5.9
