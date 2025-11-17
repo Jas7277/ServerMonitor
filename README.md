@@ -104,4 +104,4 @@ server_monitor/
 ```
 
 ## License
-MIT (or your choice).
+MIT
